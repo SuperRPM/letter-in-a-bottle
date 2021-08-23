@@ -1,5 +1,6 @@
 import express from 'express';
 import 'express-async-errors';
+import * as letterController from '../controller/letter.js'
 
 const router = express.Router();
 
