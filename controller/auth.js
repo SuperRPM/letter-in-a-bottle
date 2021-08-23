@@ -9,13 +9,17 @@ export async function sigup(req, res) {
         email,
         url,
     };
-    res.status(200).json(user);
+    const token = 1234;
+    res.status(200).json({ token, user });
 }
 
 export async function login(req, res) {
-    res.sendStatus(200);
+    const { account, password } = req.body;
+    const token = 1234;
+    res.status(200).json({ token, account });
 }
 
 export async function me(req, res) {
     res.sendStatus(200);
+
 }
