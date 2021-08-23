@@ -9,5 +9,7 @@ router.post('/signup', authController.signup);
 // POST /auth/login
 router.post('/login', authController.login);
 
-// POST /auth/me
+// GET /auth/me
 router.get('/me', authController.me);
+
+export default router;
