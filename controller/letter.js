@@ -1,4 +1,4 @@
-import * as letterData from '../data/letter'
+import * as letterData from '../data/letter.js'
 // getAllLetter getLetter createLetter removeLetter
 
 export async function getAllLetter(req, res) {
