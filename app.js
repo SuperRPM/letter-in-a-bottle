@@ -1,4 +1,5 @@
 import express from 'express';
+import { sequelize } from './db/database.js';
 // import 'express-async-errors';
 import authRouter from './router/auth.js';
 import letterRouter from './router/letter.js';
@@ -14,10 +15,12 @@ app.use((req, res, next) => {
 
 
 
+sequelize.sync.then(() => {
+    const server = app.listen(8080, function () {
+        const host = server.address().address;
+        const port = server.address().port;
+    
+        console.log(`http://localhost:${port}`);
+    });
 
-const server = app.listen(8080, function () {
-    const host = server.address().address;
-    const port = server.address().port;
-
-    console.log(`http://localhost:${port}`);
-});
+})
