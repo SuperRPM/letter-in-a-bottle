@@ -22,8 +22,12 @@ export async function signup(req, res) {
 
 export async function login(req, res) {
     const { account, password } = req.body;
+    const exist = await userData.findByAccount(account);
+    if (!exist) {
+        return res.status(401).json({ message: '아이디를 확인하삼!'})
+    }
     const token = 1234;
-    res.status(200).json({ account });
+    res.status(200).json({ message: '로그인 성공했삼!' });
 }
 
 export async function me(req, res) {
