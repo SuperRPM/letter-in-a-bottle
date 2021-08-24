@@ -1,7 +1,7 @@
 import * as letterData from '../data/letter'
 // getAllLetter getLetter createLetter removeLetter
 
-export function getAllLetter(req, res) {
+export async function getAllLetter(req, res) {
     const account = req.query.account;
     const data = await letterData.getAllLettrByAccount(account);
     if (data) {
@@ -11,7 +11,7 @@ export function getAllLetter(req, res) {
     }
 }
 
-export function getLetter(req, res) {
+export async function getLetter(req, res) {
     const id = req.param.id;
     const letter = await letterData.gettAllLetterbyId(id);
     if (letter) {
@@ -21,13 +21,13 @@ export function getLetter(req, res) {
     }
 }
 
-export function postLetter(req, res) {
+export async function postLetter(req, res) {
     const {text} = req.body;
     const letter = await letterData.createLtter(text, req.userId);
     res.status(201).json(letter);
 }
 
-export function removeLetter(req, res) {
+export async function removeLetter(req, res) {
     const id = req.param.id;
     const isValid = await letterData.gettAllLetterbyId(id);
     if (!isValid) {
