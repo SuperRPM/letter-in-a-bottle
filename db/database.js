@@ -1,7 +1,8 @@
 import pkg from 'sequelize';
+import { config } from '../config.js'
 
 const { Sequelize, DataTypes } = pkg;
-
+const { host, user, database, password } = config.db;
 export const sequelize = new Sequelize(database, user, password, {
     host,
     dialect: 'mysql',
@@ -38,3 +39,17 @@ export const User = sequelize.define('user', {
         type: DataTypes.TEXT,
     }
 }, {timestamps: false })
+
+export const Letter = sequelize.define('letter', {
+    id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        allowNull: false,
+        primaryKey: true,
+        unique: true
+    },
+    text: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+    },
+}, { updatedAt: false });
