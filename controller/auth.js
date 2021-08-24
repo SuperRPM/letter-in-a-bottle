@@ -8,14 +8,14 @@ export async function signup(req, res) {
     if (exist) {
         return res.sendStatus(409);
     }
-    const user = {
+    const userObject = {
         account,
         password,
         name,
         email,
         url,
     };
-    const userId = await userData.createUser(user)
+    const userId = await userData.createUser(userObject)
     const token = 1234;
     res.status(200).json({ token, userId });
 }
