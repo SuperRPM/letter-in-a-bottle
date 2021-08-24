@@ -2,7 +2,7 @@ import pkg from 'sequelize';
 
 const { Sequelize, DataTypes } = pkg;
 
-const sequelize = new Sequelize(database, user, password, {
+export const sequelize = new Sequelize(database, user, password, {
     host,
     dialect: 'mysql',
     logging: true,
