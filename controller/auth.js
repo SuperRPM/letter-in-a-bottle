@@ -2,7 +2,7 @@ import * as userData from '../data/auth.js';
 // signup login me
 
 
-export async function sigup(req, res) {
+export async function signup(req, res) {
     const { account, password, name, email, url } = req.body;
     const exist = await userData.findByAccount(account);
     if (exist) {

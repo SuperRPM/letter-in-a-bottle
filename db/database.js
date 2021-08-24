@@ -53,3 +53,4 @@ export const Letter = sequelize.define('letter', {
         allowNull: false,
     },
 }, { updatedAt: false });
+Letter.belongsTo(User);

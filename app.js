@@ -15,7 +15,7 @@ app.use((req, res, next) => {
 
 
 
-sequelize.sync.then(() => {
+sequelize.sync().then(() => {
     const server = app.listen(8080, function () {
         const host = server.address().address;
         const port = server.address().port;
