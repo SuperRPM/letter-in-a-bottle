@@ -1,6 +1,6 @@
 // findByAccount createUser
 
-import { User } from "../db/database"
+import { User } from "../db/database.js"
 
 export async function findByAccount(account) {
     return User.findOne({ where: { account }})

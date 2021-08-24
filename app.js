@@ -3,7 +3,11 @@ import { sequelize } from './db/database.js';
 // import 'express-async-errors';
 import authRouter from './router/auth.js';
 import letterRouter from './router/letter.js';
+
 const app = express();
+
+// request body parser
+app.use(express.json());
 
 app.use('/auth', authRouter);
 app.use('/letter', letterRouter)
