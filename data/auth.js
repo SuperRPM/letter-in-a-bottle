@@ -7,3 +7,7 @@ export async function findByAccount(account) {
 export async function createUser(userObject) {
     return User.create(userObject).then(data => data.dataValues.id)
 }
+
+export async function findById(id) {
+    return User.findOne({ where: {id} })
+}
