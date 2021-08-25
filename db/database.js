@@ -52,5 +52,25 @@ export const Letter = sequelize.define('letter', {
         type: DataTypes.TEXT,
         allowNull: false,
     },
+    replied: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
+    }
 }, { updatedAt: false });
+
+export const Reply = sequelize.define('reply', {
+    id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        allowNull: false,
+        primaryKey: true,
+        unique: true
+    },
+    text: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+    },
+}, { updatedAt: false });
+
+Reply.belongsTo(User);
 Letter.belongsTo(User);
