@@ -35,5 +35,5 @@ export async function createLetter(userId, text) {
 }
 
 export async function deleteLetter(id) {
-    return null
+    return Letter.findByPk(id).then((letter) => letter.destroy());
 }
