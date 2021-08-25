@@ -1,25 +1,26 @@
 import express from 'express';
 // import 'express-async-errors';
 import * as letterController from '../controller/letter.js'
+import { isAuth } from '../middleware/auth.js';
 
 const router = express.Router();
 
 // GET /letter
-router.get('/', letterController.getAllLetter);
+router.get('/', isAuth, letterController.getAllLetter);
 
 // GET /letter/:id
-router.get('/:id', letterController.getLetter);
+router.get('/:id', isAuth, letterController.getLetter);
 
 // POST /letter
-router.post('/', letterController.postLetter);
+router.post('/', isAuth, letterController.postLetter);
 
 // GET /mailbox
-router.get('/mailbox', letterController.getLetter)
+router.get('/mailbox', isAuth, letterController.getLetter)
 
 // DELETE /mailbox/:id
-router.delete('/mailbox/:id', letterController.flowALetter)
+router.delete('/mailbox/:id', isAuth, letterController.flowALetter)
 
 // DELETE /letter/:id
-router.delete('/:id', letterController.removeLetter);
+router.delete('/:id', isAuth, letterController.removeLetter);
 
 export default router;

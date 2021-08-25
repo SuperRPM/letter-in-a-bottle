@@ -3,7 +3,6 @@ import * as letterData from '../data/letter.js'
 
 export async function getAllLetter(req, res) {
     const account = req.query.account;
-    console.log(account);
     const data = await letterData.getAllLetterByAccount(account);
     if (data) {
         res.status(200).json(data);
@@ -39,9 +38,6 @@ export async function removeLetter(req, res) {
     if (!isValid) {
         return res.sendStatus(404);
     }
-    // if (isValid.userId !== req.userId) {
-    //     return res.sendStatus(403);
-    // }
     await letterData.deleteLetter(id);
     res.sendStatus(204);
 }
