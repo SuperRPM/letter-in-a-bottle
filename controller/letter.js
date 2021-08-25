@@ -12,7 +12,7 @@ export async function getAllLetter(req, res) {
 }
 
 export async function getLetter(req, res) {
-    const id = req.param.id;
+    const id = req.params.id;
     const letter = await letterData.getLetterById(id);
     if (letter) {
         res.status(200).json(letter);

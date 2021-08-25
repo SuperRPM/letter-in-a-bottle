@@ -27,7 +27,7 @@ export async function getAllLetterByAccount(account) {
         ...ORDER_DESC,
         include: {
             ...INCLUDE_USER.include,
-            where: {account: account},
+            // where: {account: account},
         },
     });
 };
@@ -41,5 +41,5 @@ export async function createLetter(text, userId) {
 }
 
 export async function deleteLetter(id) {
-    return Letter.findByPk(id).then((letter) => letter.destroy());
+    return Letter.findByPk(id).then((letter) => console.log(letter));
 }
