@@ -41,5 +41,5 @@ export async function createLetter(text, userId) {
 }
 
 export async function deleteLetter(id) {
-    return Letter.findByPk(id).then((letter) => console.log(letter));
+    return Letter.findByPk(id).then((letter) => letter.destroy());
 }

@@ -33,14 +33,14 @@ export async function flowALetter(req, res) {
 }
 
 export async function removeLetter(req, res) {
-    const id = req.param.id;
+    const id = req.params.id;
     const isValid = await letterData.getLetterById(id);
     if (!isValid) {
         return res.sendStatus(404);
     }
-    if (isValid.userId !== req.userId) {
-        return res.sendStatus(403);
-    }
+    // if (isValid.userId !== req.userId) {
+    //     return res.sendStatus(403);
+    // }
     await letterData.deleteLetter(id);
     res.sendStatus(204);
 }
