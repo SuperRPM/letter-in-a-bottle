@@ -1,5 +1,5 @@
 import pkg from 'sequelize';
-import { config } from '../config.js'
+import config from '../config.js'
 
 const { Sequelize, DataTypes } = pkg;
 const { host, user, database, password } = config.db;

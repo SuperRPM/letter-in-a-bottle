@@ -8,7 +8,7 @@ function required(key, defaultValue = undefined) {
     }
     return value
 }
-export const config = {
+const config = {
     jwt: {
         secretKey: required('JWT_SECRET'),
         expiresInSec: parseInt(required('JWT_EXPIRES_SEC', 43200)),
@@ -26,3 +26,5 @@ export const config = {
         password: required('DB_PASSWORD'),
     }
 }
+
+export default config;

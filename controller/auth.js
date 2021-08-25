@@ -12,26 +12,28 @@ export async function signup(req, res) {
     if (exist) {
         return res.status(409).json({ message: `${account}는 이미 사용되고 있는 아이디 입니다.`});
     }
-    const userObject = {
+    const userId = await userData.createUser({
         account,
         password,
         name,
         email,
         url,
-    };
-    const userId = await userData.createUser(userObject)
-    const token = 1234;
+    });
+    const token = createJwtToken(userId);
     res.status(200).json({ token, userId });
 }
 
 export async function login(req, res) {
     const { account, password } = req.body;
-    const exist = await userData.findByAccount(account);
-    if (!exist) {
+    const user = await userData.findByAccount(account);
+    if (!user) {
         return res.status(401).json({ message: '아이디를 확인하삼!'})
     }
-    const token = 1234;
-    res.status(200).json({ message: '로그인 성공했삼!' });
+    if(user.password !== password) {
+        return res.status(401).json({ message: '비밀번호를 확인하삼!'})
+    }
+        const token = createJwtToken(user.id);
+    res.status(200).json({ token, account });
 }
 
 export async function me(req, res) {
