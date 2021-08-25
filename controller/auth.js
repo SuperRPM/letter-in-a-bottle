@@ -1,6 +1,10 @@
 import * as userData from '../data/auth.js';
-// signup login me
+import jwt from 'jsonwebtoken';
+import config from '../config.js'
 
+function createJwtToken(id) {
+    return jwt.sign({ id }, config.jwt.secretKey, { expiresIn: config.jwt.expiresInSec });
+}
 
 export async function signup(req, res) {
     const { account, password, name, email, url } = req.body;
