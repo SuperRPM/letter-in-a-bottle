@@ -14,7 +14,10 @@ router.get('/:id', letterController.getLetter);
 router.post('/', letterController.postLetter);
 
 // GET /mailbox
-router.get('/', letterController.flowALetter)
+router.get('/mailbox', letterController.getLetter)
+
+// DELETE /mailbox/:id
+router.delete('/mailbox/:id', letterController.flowALetter)
 
 // DELETE /letter/:id
 router.delete('/:id', letterController.removeLetter);
