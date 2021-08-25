@@ -36,7 +36,7 @@ export async function getLetterById(id) {
     return Letter.findByPk(id, INCLUDE_USER)
 }
 
-export async function createLetter(userId, text) {
+export async function createLetter(text, userId) {
     return Letter.create({ text, userId }).then(data => this.getLetterById(data.dataValues.id));
 }
 
