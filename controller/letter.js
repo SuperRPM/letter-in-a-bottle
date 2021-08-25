@@ -3,7 +3,7 @@ import * as letterData from '../data/letter.js'
 
 export async function getAllLetter(req, res) {
     const account = req.query.account;
-    const data = await letterData.getAllLettrByAccount(account);
+    const data = await letterData.getAllLetterByAccount(account);
     if (data) {
         res.status(200).json(data);
     } else {
@@ -13,7 +13,7 @@ export async function getAllLetter(req, res) {
 
 export async function getLetter(req, res) {
     const id = req.param.id;
-    const letter = await letterData.getLetterbyId(id);
+    const letter = await letterData.getLetterById(id);
     if (letter) {
         res.status(200).json(letter);
     } else {
@@ -23,7 +23,7 @@ export async function getLetter(req, res) {
 
 export async function postLetter(req, res) {
     const {text} = req.body;
-    const letter = await letterData.createLtter(text, req.userId);
+    const letter = await letterData.createLetter(text, req.userId);
     res.status(201).json(letter);
 }
 
@@ -34,7 +34,7 @@ export async function flowALetter(req, res) {
 
 export async function removeLetter(req, res) {
     const id = req.param.id;
-    const isValid = await letterData.getLetterbyId(id);
+    const isValid = await letterData.getLetterById(id);
     if (!isValid) {
         return res.sendStatus(404);
     }

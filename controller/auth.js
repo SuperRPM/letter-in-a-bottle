@@ -32,5 +32,4 @@ export async function login(req, res) {
 
 export async function me(req, res) {
     res.sendStatus(200);
-
 }

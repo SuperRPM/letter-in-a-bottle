@@ -1,5 +1,7 @@
-import { Sequelize } from "sequelize/types";
+import pkg from 'sequelize';
 import { Letter, User } from "../db/database.js"
+
+const { Sequelize, DataTypes } = pkg;
 
 const INCLUDE_USER = {
     attribues: [
@@ -10,7 +12,11 @@ const INCLUDE_USER = {
         [Sequelize.col('user.name'), 'name'],
         [Sequelize.col('user.account'), 'account'],
         [Sequelize.col('user.url'), 'url'],
-    ]
+    ],
+    include: {
+        model: User,
+        attribues: []
+    }
 };
 
 const ORDER_DESC = { order: [['createdAt', 'DESC']] };
@@ -21,7 +27,7 @@ export async function getAllLetterByAccount(account) {
         ...ORDER_DESC,
         include: {
             ...INCLUDE_USER.include,
-            where: {account},
+            where: {account: account},
         },
     });
 };
