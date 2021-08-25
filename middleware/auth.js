@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import * as userData from '../data/auth.js';
-import { config } from '../config.js';
+import config from '../config.js';
 
 export const isAuth = async (req, res, next) => {
     const authHeader = req.get('Authorization');
@@ -16,7 +16,7 @@ export const isAuth = async (req, res, next) => {
             if (error) {
                 return res.status(401).json({ message: 'middleware auth error' });
             }
-            const user = await userData.(decoded.id);
+            const user = await userData.findById(decoded.id);
             if(!user) {
                 return res.status(401).json({ message: "그런 유저 없는데?" });
             }
