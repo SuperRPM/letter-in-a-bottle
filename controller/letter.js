@@ -27,6 +27,11 @@ export async function postLetter(req, res) {
     res.status(201).json(letter);
 }
 
+// 받은편지를 답장하지 않고 다시 데이터베이스로 넣을 때 쓴다.
+export async function flowALetter(req, res) {
+    return null
+}
+
 export async function removeLetter(req, res) {
     const id = req.param.id;
     const isValid = await letterData.gettAllLetterbyId(id);
