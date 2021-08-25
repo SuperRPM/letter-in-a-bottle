@@ -13,7 +13,7 @@ export async function getAllLetter(req, res) {
 
 export async function getLetter(req, res) {
     const id = req.param.id;
-    const letter = await letterData.gettAllLetterbyId(id);
+    const letter = await letterData.getLetterbyId(id);
     if (letter) {
         res.status(200).json(letter);
     } else {
@@ -34,7 +34,7 @@ export async function flowALetter(req, res) {
 
 export async function removeLetter(req, res) {
     const id = req.param.id;
-    const isValid = await letterData.gettAllLetterbyId(id);
+    const isValid = await letterData.getLetterbyId(id);
     if (!isValid) {
         return res.sendStatus(404);
     }

@@ -15,7 +15,7 @@ const INCLUDE_USER = {
 
 const ORDER_DESC = { order: [['createdAt', 'DESC']] };
 
-export async function gettAllLetterByAccount(account) {
+export async function getAllLetterByAccount(account) {
     return Letter.findAll({
         ...INCLUDE_USER,
         ...ORDER_DESC,
@@ -26,12 +26,12 @@ export async function gettAllLetterByAccount(account) {
     });
 };
 
-export async function getAllLetterById(id) {
-    return null
+export async function getLetterById(id) {
+    return Letter.findByPk(id, INCLUDE_USER)
 }
 
 export async function createLetter(userId, text) {
-    return null
+    return Letter.create({ text, userId }).then(data => this.getLetterById(data.dataValues.id));
 }
 
 export async function deleteLetter(id) {
