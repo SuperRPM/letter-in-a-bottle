@@ -55,6 +55,7 @@ export const Letter = sequelize.define('letter', {
     replied: {
         type: DataTypes.BOOLEAN,
         allowNull: true,
+        defaultValue: false,
     }
 }, { updatedAt: false });
 

@@ -1,10 +1,9 @@
-import pkg from 'sequelize';
 import { Letter, User } from "../db/database.js"
+import pkg from 'sequelize';
+const { Sequelize } = pkg;
 
-const { Sequelize, DataTypes } = pkg;
-
-const INCLUDE_USER = {
-    attribues: [
+const JOIN_USER = {
+    attributes: [
         'id',
         'text',
         'createdAt',
@@ -15,7 +14,7 @@ const INCLUDE_USER = {
     ],
     include: {
         model: User,
-        attribues: []
+        attributes: []
     }
 };
 
@@ -23,17 +22,17 @@ const ORDER_DESC = { order: [['createdAt', 'DESC']] };
 
 export async function getAllLetterByAccount(account) {
     return Letter.findAll({
-        ...INCLUDE_USER,
+        ...JOIN_USER,
         ...ORDER_DESC,
         include: {
-            ...INCLUDE_USER.include,
-            // where: {account: account},
+            ...JOIN_USER.include,
+            where: {account: account},
         },
     });
 };
 
 export async function getLetterById(id) {
-    return Letter.findByPk(id, INCLUDE_USER)
+    return Letter.findByPk(id, JOIN_USER)
 }
 
 export async function createLetter(text, userId) {
