@@ -14,6 +14,9 @@ router.get('/:id', isAuth, letterController.getLetter);
 // POST /letter
 router.post('/', isAuth, letterController.postLetter);
 
+// POST /letter/:id
+router.post('/:id', isAuth, letterController.reply);
+
 // DELETE /letter/:id
 router.delete('/:id', isAuth, letterController.removeLetter);
 
