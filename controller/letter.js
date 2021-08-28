@@ -35,6 +35,9 @@ export async function flowALetter(req, res) {
 export async function removeLetter(req, res) {
     const id = req.params.id;
     const isValid = await letterData.getLetterById(id);
+    if (req.userId !== isValid.userId) {
+        return res.status(403).json({ message: '삭제할 권한이 없는데?'})
+    }
     if (!isValid) {
         return res.sendStatus(404);
     }
