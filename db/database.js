@@ -52,10 +52,10 @@ export const Letter = sequelize.define('letter', {
         type: DataTypes.TEXT,
         allowNull: false,
     },
-    replied: {
-        type: DataTypes.BOOLEAN,
+    receiver: {
+        type: DataTypes.INTEGER,
         allowNull: true,
-        defaultValue: false,
+        defaultValue: 0,
     }
 }, { updatedAt: false });
 
