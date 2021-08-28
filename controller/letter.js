@@ -23,18 +23,23 @@ export async function getLetter(req, res) {
 
 // createdAt으로 만들어진지 며칠만에 도착한 편지인지도 알려주자. 근데 그건 어디서 하지???
 export async function getRandomLetter(req, res) {
-    const allUnrepliedLetter = await letterData.getUnrepliedLetter();
-    const length = allUnrepliedLetter.length;
-    const random = Math.round(Math.random() * 10);
-    const index = random % length;
-    // console.log((Date.now() - allUnrepliedLetter[index].dataValues.createdAt)/60/60/24/1000);
-    res.status(200).json(allUnrepliedLetter[index]);
+    const UnrepliedLetter = await letterData.getUnrepliedLetter(req.userId);
+    if (!UnrepliedLetter) {
+        return res.status(404).json({ message: '아직 편지가 없어요! 다음에 다시 시도해 주세염' });
+    }
+    res.status(200).json(UnrepliedLetter);
 }
 
 export async function postLetter(req, res) {
     const {text} = req.body;
     const letter = await letterData.createLetter(text, req.userId);
     res.status(201).json(letter);
+}
+
+export async function reply(req, res) {
+    //mailbox에 있는 데이터를 가져와서.
+    //그 letter.id정보를 가지고 req.body의 text를 data로 전송한다.
+    return null;
 }
 
 // 받은편지를 답장하지 않고 다시 데이터베이스로 넣을 때 쓴다.
