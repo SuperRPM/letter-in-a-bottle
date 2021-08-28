@@ -39,8 +39,8 @@ export const User = sequelize.define('user', {
         type: DataTypes.TEXT,
     },
     mail: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
+        type: DataTypes.INTEGER,
+        defaultValue: 0
     }
 }, {timestamps: false })
 

@@ -1,5 +1,4 @@
 import { Letter, User } from "../db/database.js";
-import { findByAccount } from '../data/auth.js';
 import pkg from 'sequelize';
 const { Sequelize } = pkg;
 
@@ -63,7 +62,7 @@ export async function getUnrepliedLetter(userId) {
     const letterId = unrepliedLetter[index].dataValues.id;
     User.findByPk(userId)
     .then((user) => {
-        user.mail = true;
+        user.mail = letterId;
         user.save();
     })
     return Letter.findByPk(letterId, JOIN_USER)
