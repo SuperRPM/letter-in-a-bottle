@@ -3,14 +3,15 @@ import { sequelize } from './db/database.js';
 // import 'express-async-errors';
 import authRouter from './router/auth.js';
 import letterRouter from './router/letter.js';
-
+import mailBoxRouter from './router/mailbox.js'
 const app = express();
 
 // request body parser
 app.use(express.json());
 
 app.use('/auth', authRouter);
-app.use('/letter', letterRouter)
+app.use('/letter', letterRouter);
+app.use('/mailbox', mailBoxRouter);
 
 app.use((req, res, next) => {
     res.sendStatus(404);
