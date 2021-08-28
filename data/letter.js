@@ -8,6 +8,7 @@ const JOIN_USER = {
         'text',
         'createdAt',
         'userId',
+        'replied',
         [Sequelize.col('user.name'), 'name'],
         [Sequelize.col('user.account'), 'account'],
         [Sequelize.col('user.url'), 'url'],
@@ -41,4 +42,14 @@ export async function createLetter(text, userId) {
 
 export async function deleteLetter(id) {
     return Letter.findByPk(id).then((letter) => letter.destroy());
+}
+
+export async function getUnrepliedLetter() {
+    return Letter.findAll({
+        ...JOIN_USER,
+        where: {replied: false},
+        include: {
+            ...JOIN_USER.include,
+        },
+    });
 }
