@@ -50,9 +50,8 @@ export async function getUnrepliedLetter(userId) {
         ...JOIN_USER,
         where: { 
             receiver: 0, 
-            [Op.not] : {userId: userId} 
+            [Op.not] : {userId: userId} // can not get letter more than one.
         },
-        // 자기편지를 받으면 안되고 이미 편지를 가진 유저가 또 받으면 안되는데 어떻게 해야하나
         include: {
             ...JOIN_USER.include,
         },
@@ -62,6 +61,7 @@ export async function getUnrepliedLetter(userId) {
     if (length === 0) {
         return false;
     }
+
     const random = Math.round(Math.random() * 10);
     const index = random % length;
     const letterId = unrepliedLetter[index].dataValues.id;
@@ -76,4 +76,8 @@ export async function getUnrepliedLetter(userId) {
         letter.receiver = userId;
         return letter.save();
     })
+}
+
+export async function checkMailbox(userId) {
+    User.findByPk(userId).then((user) => { user.mail });
 }

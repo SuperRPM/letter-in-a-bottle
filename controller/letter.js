@@ -23,6 +23,10 @@ export async function getLetter(req, res) {
 
 // createdAt으로 만들어진지 며칠만에 도착한 편지인지도 알려주자. 근데 그건 어디서 하지???
 export async function getRandomLetter(req, res) {
+    const alreadyGet = letterData.checkMailbox(req.userId);
+    if (alreadyGet) {
+        return res.status(200).json({ message: '이미 편지함에 한통의 편지가 있어요! 답장을 하거나 다시 돌려보내기 전까진 새로 편지를 받을 수 없어요'})
+    }
     const UnrepliedLetter = await letterData.getUnrepliedLetter(req.userId);
     if (!UnrepliedLetter) {
         return res.status(404).json({ message: '아직 편지가 없어요! 다음에 다시 시도해 주세염' });
@@ -37,7 +41,7 @@ export async function postLetter(req, res) {
 }
 
 export async function reply(req, res) {
-    //mailbox에 있는 데이터를 가져와서.
+    //user 모델에서 가지고있는 mail로 letter에서 편지를 찾고
     //그 letter.id정보를 가지고 req.body의 text를 data로 전송한다.
     return null;
 }
