@@ -49,7 +49,8 @@ export async function getUnrepliedLetter(userId) {
     const unrepliedLetter = await Letter.findAll({
         ...JOIN_USER,
         where: { 
-            receiver: 0, 
+            receiver: 0,
+            rplied: 0, 
             [Op.not] : {userId: userId} // can not get letter more than one.
         },
         include: {

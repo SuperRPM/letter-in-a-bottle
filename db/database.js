@@ -60,6 +60,10 @@ export const Letter = sequelize.define('letter', {
         type: DataTypes.INTEGER,
         allowNull: true,
         defaultValue: 0,
+    },
+    replied: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
     }
 }, { updatedAt: false });
 
