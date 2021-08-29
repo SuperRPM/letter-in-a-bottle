@@ -1,6 +1,7 @@
 import { Letter, User } from "../db/database.js";
 import pkg from 'sequelize';
 const { Sequelize } = pkg;
+const Op = Sequelize.Op;
 
 const JOIN_USER = {
     attributes: [
@@ -47,12 +48,16 @@ export async function deleteLetter(id) {
 export async function getUnrepliedLetter(userId) {
     const unrepliedLetter = await Letter.findAll({
         ...JOIN_USER,
-        where: { receiver: 0 },
+        where: { 
+            receiver: 0, 
+            [Op.not] : {userId: userId} 
+        },
         // 자기편지를 받으면 안되고 이미 편지를 가진 유저가 또 받으면 안되는데 어떻게 해야하나
         include: {
             ...JOIN_USER.include,
         },
     });
+
     const length = unrepliedLetter.length;
     if (length === 0) {
         return false;
@@ -60,6 +65,7 @@ export async function getUnrepliedLetter(userId) {
     const random = Math.round(Math.random() * 10);
     const index = random % length;
     const letterId = unrepliedLetter[index].dataValues.id;
+    console.log(userId, unrepliedLetter[index].dataValues.userId);
     User.findByPk(userId)
     .then((user) => {
         user.mail = letterId;
