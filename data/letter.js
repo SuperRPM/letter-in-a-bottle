@@ -1,4 +1,4 @@
-import { Letter, User } from "../db/database.js";
+import { Letter, Reply, User } from "../db/database.js";
 import pkg from 'sequelize';
 const { Sequelize } = pkg;
 const Op = Sequelize.Op;
@@ -37,8 +37,26 @@ export async function getLetterById(id) {
     return Letter.findByPk(id, JOIN_USER)
 }
 
+export async function getReplyById(id) {
+    return Reply.findByPk(id)
+}
+
 export async function createLetter(text, userId) {
     return Letter.create({ text, userId }).then(data => this.getLetterById(data.dataValues.id));
+}
+
+export async function createReply(text, userId, letterId) {
+    return Reply
+        .create({ text, userId })
+        .then(data => {
+            Letter.findByPk(letterId).then((letter) => { 
+                // console.log(data.dataValues.id);
+                const replyId = data.dataValues.id;
+                letter.replied = replyId;
+                letter.save();
+                return this.getReplyById(replyId);
+            });
+        });
 }
 
 export async function deleteLetter(id) {
@@ -50,7 +68,7 @@ export async function getUnrepliedLetter(userId) {
         ...JOIN_USER,
         where: { 
             receiver: 0,
-            rplied: 0, 
+            replied: 0, 
             [Op.not] : {userId: userId} // can not get letter more than one.
         },
         include: {
@@ -66,7 +84,6 @@ export async function getUnrepliedLetter(userId) {
     const random = Math.round(Math.random() * 10);
     const index = random % length;
     const letterId = unrepliedLetter[index].dataValues.id;
-    console.log(userId, unrepliedLetter[index].dataValues.userId);
     User.findByPk(userId)
     .then((user) => {
         user.mail = letterId;
@@ -80,5 +97,7 @@ export async function getUnrepliedLetter(userId) {
 }
 
 export async function checkMailbox(userId) {
-    User.findByPk(userId).then((user) => { user.mail });
+    return await User.findByPk(userId).then((user) => {
+        return user.mail;
+    });
 }
