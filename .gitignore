@@ -1,3 +1,1 @@
-mode_modules
-.env
-.test.js
+node_modules
