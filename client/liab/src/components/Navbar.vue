@@ -16,6 +16,8 @@
           <a class="nav-link" href="#">광장</a>
         </li>
       </ul>
+      <button v-if="tokenExist" @click="$emit('loginOpen')" type="button" class="btn btn-outline-dark">로그인</button>
+      <button v-if="tokenExist" @click="$emit('signupOpen')" type="button" class="btn btn-outline-dark">회원가입</button>
     </div>
   </div>
 </nav>
@@ -24,7 +26,11 @@
 <script>
 export default {
     name: 'Navbar',
-
+    props: {
+      modalStatus: Boolean,
+      signupModal: Boolean,
+      tokenExist: Boolean,
+    },
 }
 </script>
 

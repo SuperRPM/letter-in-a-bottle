@@ -17,9 +17,6 @@ app.use((req, res, next) => {
     res.sendStatus(404);
 })
 
-
-
-
 sequelize.sync().then(() => {
     const server = app.listen(3000, function () {
         const host = server.address().address;

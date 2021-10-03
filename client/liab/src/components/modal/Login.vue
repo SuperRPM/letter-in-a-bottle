@@ -1,30 +1,80 @@
 <template>
-<section>
-    <form>
-    <div class="form-group">
-        <label for="exampleInputEmail1">Email address</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    <div class="black-bg" v-if="modalStatus">
+        <div class="white-bg">
+            <div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Account</label>
+                    <input type="text" class="form-control" id="input-account" v-model="account" placeholder="id를 입력하삼">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input type="password" class="form-control" id="input-password" v-model="password" placeholder="비밀번호를 입력하삼">
+                </div>
+                <div id="btn-group">
+                    <button @click="login" type="submit" class="btn btn-outline-primary">로그인</button>
+                    <button @click="$emit('modalClose')" type="submit" class="btn btn-outline-primary">닫기</button>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        <label for="exampleInputPassword1">Password</label>
-        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-    </div>
-    <div class="form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-        <label class="form-check-label" for="exampleCheck1">Check me out</label>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-</section>
 </template>
 
 <script>
-export default {
+import axios from 'axios';
 
+export default {
+    name: 'Login',
+    data() {
+        return {
+            account: "",
+            password: "",
+            token: "",
+        }
+    },
+    props: {
+        modalStatus: Boolean,
+    },
+    components: {
+    },
+    methods: {
+        login() {
+            axios({
+                method: 'post',
+                url: `/api/auth/login`,
+                data: {
+                    account: this.account,
+                    password: this.password,
+                }
+            })
+            .then((result) => {
+                this.token = result.data.token;
+                localStorage.setItem('token', this.token)
+                localStorage.setItem('account', this.account)
+                this.$emit('modalClose')
+                this.$router.go();
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+        }
+    }
 }
 </script>
 
 <style>
+.black-bg {
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed; padding: 20px;
 
+}
+.white-bg {
+  width: 100%;
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+}
+.btn {
+    margin-right: 10px;
+}
 </style>

@@ -11,7 +11,7 @@ export async function signup(req, res) {
     const exist = await userData.findByAccount(account);
     if (exist) {
         return res.status(409).json({ message: `${account}는 이미 사용되고 있는 아이디 입니다.`});
-    }
+    };
     const hash = await bcrypt.hash(password, config.bcrypt.saltRounds);
     const userId = await userData.createUser({
         account,
@@ -26,7 +26,7 @@ export async function signup(req, res) {
 
 export async function login(req, res) {
     const { account, password } = req.body;
-    const user = await userData.findByAccount(account); console.log(user);
+    const user = await userData.findByAccount(account);
     if (!user) {
         return res.status(401).json({ message: '아이디를 확인하삼!'})
     }
@@ -34,7 +34,7 @@ export async function login(req, res) {
     if(!isValidPassword) {
         return res.status(401).json({ message: '비밀번호를 확인하삼!'})
     }
-        const token = createJwtToken(user.id);
+    const token = createJwtToken(user.id);
     res.status(200).json({ token, account });
 }
 

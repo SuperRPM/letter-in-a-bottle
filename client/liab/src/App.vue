@@ -1,27 +1,40 @@
 <template>
-<section>
-  <img id="logo" src="./assets/letter-in-bottle.png">
-  <Navbar/>
+<div>
+  <!-- <div class="bg" v-bind:style="{ 'background-image': 'url(' + require('./assets/letter-in-a-bottle.jpg') + ')' }"></div> -->
+  <!-- <div :style="{'background-image':'url(https://vuejs.org/images/logo.png)'}"></div> -->
+  <Navbar :modalStatus="modalStatus" :signupModal="signupModal" @loginOpen="modalStatus = true" @signupOpen="signupModal = true" @signupClose="signupModal = false" :tokenExist="tokenExist"/>
+  <Login :modalStatus="modalStatus" @modalClose="modalStatus = false"/>
+  <Signup v-bind:signupModal="signupModal" @signupClose="signupModal = false"/>
   <div class="mt-10" id="WriteLetter">
     <router-view></router-view>
   </div>
-  <p>{{data.a}}this is data</p>
-</section>
+</div>
 </template>
 
 <script>
 import Navbar from './components/Navbar.vue';
-import jsondata from './data.js';
+import Login from './components/modal/Login.vue';
+import Signup from './components/modal/Signup.vue';
+
 export default {
   name: 'App',
   data() {
     return {
-      data: jsondata,
+      modalStatus: false,
+      signupModal: false,
+      tokenExist: true,
+      bgImage: './assets/letter-in-a-bottle.jpg',
     }
   },
   components: {
+    Signup: Signup,
     Navbar: Navbar,
-
+    Login: Login,
+  },
+  beforeMount() {
+    if (localStorage.getItem('token')) {
+      this.tokenExist = false;
+    }
   }
 }
 </script>

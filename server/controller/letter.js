@@ -23,9 +23,10 @@ export async function getLetter(req, res) {
 
 // createdAt으로 만들어진지 며칠만에 도착한 편지인지도 알려주자. 근데 그건 어디서 하지???
 export async function getRandomLetter(req, res) {
-    const alreadyGet = await letterData.checkMailbox(req.userId);
-    if (alreadyGet) {
-        return res.status(200).json({ message: '이미 편지함에 한통의 편지가 있어요! 답장을 하거나 다시 돌려보내기 전까진 새로 편지를 받을 수 없어요'})
+    const alreadyGetMailId = await letterData.checkMailbox(req.userId);
+    if (alreadyGetMailId) { 
+        const existMail = await letterData.getLetterById(alreadyGetMailId)
+        return res.status(200).json(existMail)
     }
     const UnrepliedLetter = await letterData.getUnrepliedLetter(req.userId);
     if (!UnrepliedLetter) {
