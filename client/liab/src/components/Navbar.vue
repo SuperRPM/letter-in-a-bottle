@@ -18,6 +18,7 @@
       </ul>
       <button v-if="tokenExist" @click="$emit('loginOpen')" type="button" class="btn btn-outline-dark">로그인</button>
       <button v-if="tokenExist" @click="$emit('signupOpen')" type="button" class="btn btn-outline-dark">회원가입</button>
+      <button v-if="accountExist != undefined" @click="logout" type="button" class="btn btn-outline-dark">로그아웃</button>
     </div>
   </div>
 </nav>
@@ -26,11 +27,23 @@
 <script>
 export default {
     name: 'Navbar',
+    data() {
+      return {
+        accountExist: localStorage.getItem('account'),
+      }
+    },
     props: {
       modalStatus: Boolean,
       signupModal: Boolean,
       tokenExist: Boolean,
     },
+    methods: {
+      logout() {
+        localStorage.removeItem('account');
+        localStorage.removeItem('token');
+        this.$router.go();
+      }
+    }
 }
 </script>
 
