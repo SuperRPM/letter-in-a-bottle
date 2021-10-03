@@ -35,7 +35,6 @@ export default {
             })
             .then((result) => {
                 this.letterObject = result.data;
-                console.log(result);
                 console.log(this.letterObject);
             })
             .catch((error) => {
