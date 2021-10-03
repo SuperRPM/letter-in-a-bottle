@@ -11,7 +11,6 @@
       <p><strong>{{letter.name}}</strong></p>
       <p class="date">{{letter.createdAt}}</p>
     </div>
-    <button>편지 가져오기</button>
 </div> 
 </template>
 
