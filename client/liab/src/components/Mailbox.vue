@@ -1,10 +1,13 @@
 <template>
   <div>
+    <button v-if="!letterObject.id" @click="getLetter" type="button" class="btn btn-outline-primary">편지가져오기</button>
+  </div>
+  <div>
     <Letter :letter="letterObject"/>
   </div>
   <div>
-    <button v-if="letterObject" @click="replyOn = true" type="button" class="btn btn-outline-dark">답장하기</button>
-    <button v-if="letterObject" @click="$emit('loginOpen')" type="button" class="btn btn-outline-danger">돌려보내기</button>
+    <button v-if="letterObject.id" @click="replyOn = true" type="button" class="btn btn-outline-dark">답장하기</button>
+    <button v-if="letterObject.id" @click="flowLetter" type="button" class="btn btn-outline-danger">돌려보내기</button>
   </div>
   <div class="mt-5">
     <Reply v-if="replyOn"/>
@@ -27,9 +30,9 @@ export default {
       Letter: Letter,
       Reply: Reply,
     },
-    beforeMount() {
-      this.getLetter();
-    },
+    // beforeMount() {
+    //   this.getLetter();
+    // },
     methods: {
         getLetter() { 
             const account = localStorage.getItem('account');
@@ -45,11 +48,27 @@ export default {
             })
             .then((result) => {
                 this.letterObject = result.data;
-                console.log(this.letterObject);
+                console.log(this.letterObject.id);
             })
             .catch((error) => {
                 console.log(error);
             })
+        },
+        flowLetter() {
+          axios({
+            method: 'get',
+            url: `/api/mailbox/${this.letterObject.id}`,
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+          })
+          .then((result) => {
+            console.log(result);
+            this.$router.go()
+          })
+          .catch((error) => {
+            console.log(error);
+          })
         }
     }
 }
