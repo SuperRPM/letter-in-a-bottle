@@ -1,7 +1,5 @@
 <template>
-<div>
-  <!-- <div class="bg" v-bind:style="{ 'background-image': 'url(' + require('./assets/letter-in-a-bottle.jpg') + ')' }"></div> -->
-  <!-- <div :style="{'background-image':'url(https://vuejs.org/images/logo.png)'}"></div> -->
+<div class="main">
   <Navbar :modalStatus="modalStatus" :signupModal="signupModal" @loginOpen="modalStatus = true" @signupOpen="signupModal = true" @signupClose="signupModal = false" :tokenExist="tokenExist"/>
   <Login :modalStatus="modalStatus" @modalClose="modalStatus = false"/>
   <Signup v-bind:signupModal="signupModal" @signupClose="signupModal = false"/>
@@ -50,5 +48,14 @@ export default {
 #logo {
   width: 250px;
   height: auto;
+}
+.main {
+  background-image: url("./assets/letter-in-a-bottle.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 100%;
+}
+#router-view {
+  height: 670px;
 }
 </style>
