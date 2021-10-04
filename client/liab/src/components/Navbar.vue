@@ -10,7 +10,7 @@
           <a class="nav-link active" aria-current="page" href="/write">편지 쓰기</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/mailbox">내 편지함</a>
+          <a class="nav-link" href="/mailbox">낚시!</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">광장</a>

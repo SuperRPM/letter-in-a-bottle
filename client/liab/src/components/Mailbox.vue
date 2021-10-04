@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button v-if="!letterObject.id" @click="getLetter" type="button" class="btn btn-outline-primary">편지가져오기</button>
+    <button v-if="!letterObject.id" @click="getLetter" type="button" class="btn btn-outline-primary">편지 낚아오기!</button>
   </div>
   <div>
     <Letter :letter="letterObject"/>
