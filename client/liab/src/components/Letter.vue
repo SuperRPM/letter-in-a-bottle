@@ -52,6 +52,9 @@ export default {
   background-position: center;
   background-size: cover;
   background-color: beige;
+  font-family: monospace;
+  font-size: 120%;
+  color:darkblue;
 }
 .post-content {
   padding-left: 15px;
