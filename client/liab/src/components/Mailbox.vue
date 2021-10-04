@@ -2,20 +2,30 @@
   <div>
     <Letter :letter="letterObject"/>
   </div>
+  <div>
+    <button v-if="letterObject" @click="replyOn = true" type="button" class="btn btn-outline-dark">답장하기</button>
+    <button v-if="letterObject" @click="$emit('loginOpen')" type="button" class="btn btn-outline-danger">돌려보내기</button>
+  </div>
+  <div class="mt-5">
+    <Reply v-if="replyOn"/>
+  </div>
 </template>
 
 <script>
 import axios from 'axios';
 import Letter from './Letter.vue';
+import Reply from './reply.vue';
 
 export default {
     data() {
       return {
         letterObject: {},
+        replyOn: false,
       }
     },
     components: {
       Letter: Letter,
+      Reply: Reply,
     },
     beforeMount() {
       this.getLetter();

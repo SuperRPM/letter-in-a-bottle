@@ -5,7 +5,7 @@
   <Navbar :modalStatus="modalStatus" :signupModal="signupModal" @loginOpen="modalStatus = true" @signupOpen="signupModal = true" @signupClose="signupModal = false" :tokenExist="tokenExist"/>
   <Login :modalStatus="modalStatus" @modalClose="modalStatus = false"/>
   <Signup v-bind:signupModal="signupModal" @signupClose="signupModal = false"/>
-  <div class="mt-10" id="WriteLetter">
+  <div class="mt-10" id="router-view">
     <router-view></router-view>
   </div>
 </div>
