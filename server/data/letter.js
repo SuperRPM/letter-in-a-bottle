@@ -46,17 +46,24 @@ export async function createLetter(text, userId) {
 }
 
 export async function createReply(text, userId, letterId) {
-    return Reply
-        .create({ text, userId })
-        .then(data => {
-            Letter.findByPk(letterId).then((letter) => { 
-                // console.log(data.dataValues.id);
-                const replyId = data.dataValues.id;
-                letter.replied = replyId;
-                letter.save();
-                return this.getReplyById(replyId);
-            });
-        });
+    let replyId = 0
+    await Reply
+    .create({ text, userId, letterId })
+    .then((data) => {
+        replyId = data.dataValues.id;
+    })
+    await User
+    .findByPk(userId)
+    .then((user) => {
+        user.mail = 0
+        user.save()
+    })
+    return await Letter.findByPk(letterId)
+    .then((letter) => { 
+        letter.replied = replyId;
+        letter.save();
+        return // this.getReplyById(replyId);
+    })
 }
 
 export async function deleteLetter(id) {

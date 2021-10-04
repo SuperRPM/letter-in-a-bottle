@@ -44,8 +44,8 @@ export async function postLetter(req, res) {
 export async function postReply(req, res) {
     const { text } = req.body;
     const letterId = req.params.id;
-    const reply = await letterData.createReply(text, req.userId, letterId);
-    res.status(201).json(reply);
+    await letterData.createReply(text, req.userId, letterId);
+    res.status(201).json({ message: 'reply success'});
 }
 
 // 받은편지를 답장하지 않고 다시 데이터베이스를 조작해서 Letter.receiver User.mail을 초기상태로 돌린다.

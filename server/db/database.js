@@ -81,6 +81,6 @@ export const Reply = sequelize.define('reply', {
     },
 }, { updatedAt: false });
 
-Reply.belongsTo(User);
-Reply.belongsTo(Letter, {foreignKey: 'letterId'})
+Reply.belongsTo(User, {foreignKey: 'userId'});
+Reply.belongsTo(Letter, {foreignKey: 'letterId'});
 Letter.belongsTo(User);

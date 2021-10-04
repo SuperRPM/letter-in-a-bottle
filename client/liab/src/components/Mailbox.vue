@@ -10,7 +10,7 @@
     <button v-if="letterObject.id" @click="flowLetter" type="button" class="btn btn-outline-danger">돌려보내기</button>
   </div>
   <div class="mt-5">
-    <Reply v-if="replyOn"/>
+    <Reply v-if="replyOn" v-bind:letterObject="letterObject"/>
   </div>
 </template>
 
