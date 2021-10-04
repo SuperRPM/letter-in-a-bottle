@@ -1,10 +1,10 @@
 <template>
     <div class="black-bg" v-if="signupModal">
         <div class="white-bg">
-            <form>
+            <form @submit.prevent="onSubmit">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Email</label>
-                    <input type="email" class="form-control" id="input-email" v-model="email" aria-describedby="emailHelp" placeholder="Enter email">
+                    <input type="email" class="form-control" id="input-email" v-model="email" aria-describedby="emailHelp" placeholder="example@email.com">
                     <small id="emailHelp" class="form-text text-muted"></small>
                 </div>
                 <div class="form-group">
@@ -24,7 +24,6 @@
                     <button @click="$emit(signupClose)" type="submit" class="btn btn-outline-dark">닫기</button>
                 </div>                
             </form>
-            <p>이거슨 p 태그{{token}}</p>
         </div>
     </div>
 </template>
@@ -39,7 +38,7 @@ export default {
             account: "",
             password: "",
             name: "",
-            token: "asdf",
+            token: "",
             userId: "",
         }
     },
@@ -56,11 +55,13 @@ export default {
                     password: this.password,
                     email: this.email,
                     name: this.name,
-                    url: 'https://img.dmitory.com/img/202011/1yb/8MG/1yb8MGyjfag24C8w4Uqw8Q.jpg',
+                    url: '',
                 }
             })
-            .then((result) => {
-                console.log(result);
+            .then((res) => {
+                console.log(res);
+                localStorage.setItem('token', res.data.token)
+                localStorage.setItem('account', this.account)
             })
             .catch((err) => {
                 console.log(err);
