@@ -1,13 +1,13 @@
 <template>
   <div>
-    <button v-if="!letterObject.id" @click="getLetter" type="button" class="btn btn-outline-primary">편지 낚아오기!</button>
+    <button v-if="!letterObject.id" @click="getLetter" type="button" class="btn mt-5 btn-primary">편지 낚아오기!</button>
   </div>
   <div>
     <Letter :letter="letterObject"/>
   </div>
   <div>
-    <button v-if="letterObject.id" @click="replyOn = true" type="button" class="btn btn-outline-dark">답장하기</button>
-    <button v-if="letterObject.id" @click="flowLetter" type="button" class="btn btn-outline-danger">돌려보내기</button>
+    <button v-if="letterObject.id" @click="replyOn = true" type="button" class="btn btn-dark">답장하기</button>
+    <button v-if="letterObject.id" @click="flowLetter" type="button" class="btn btn-danger">돌려보내기</button>
   </div>
   <div class="mt-5">
     <Reply v-if="replyOn" v-bind:letterObject="letterObject"/>
