@@ -101,3 +101,18 @@ export async function checkMailbox(userId) {
         return user.mail;
     });
 }
+
+export async function resetLetter(letterId) {
+    let userWhoReceiver = 0;
+    await Letter.findByPk(letterId)
+    .then((letter) => {
+        userWhoReceiver = letter.receiver;
+        letter.receiver = 0;
+        letter.save();
+    })
+    return await User.findByPk(userWhoReceiver)
+    .then((user) => {
+        user.mail = 0;
+        return user.save();
+    })
+}

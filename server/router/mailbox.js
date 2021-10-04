@@ -8,6 +8,6 @@ const router = express.Router()
 router.get('/', isAuth, letterController.getRandomLetter);
 
 // DELETE /mailbox/:id
-router.delete('/:id', isAuth, letterController.flowALetter)
+router.get('/:id', isAuth, letterController.flowALetter)
 
 export default router;

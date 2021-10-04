@@ -48,16 +48,18 @@ export async function postReply(req, res) {
     res.status(201).json(reply);
 }
 
-// 받은편지를 답장하지 않고 다시 데이터베이스로 넣을 때 쓴다.
+// 받은편지를 답장하지 않고 다시 데이터베이스를 조작해서 Letter.receiver User.mail을 초기상태로 돌린다.
 export async function flowALetter(req, res) {
-    return null
+    const letterId = req.params.id;
+    await letterData.resetLetter(letterId)
+    res.status(201).json({ message: 'success' })
 }
 
 export async function removeLetter(req, res) {
     const id = req.params.id;
     const isValid = await letterData.getLetterById(id);
     if (req.userId !== isValid.userId) {
-        return res.status(403).json({ message: '삭제할 권한이 없는데? 남의 편지를 삭제하려는거야? ㅜㅜ' })
+        return res.status(403).json({ message: '삭제할 권한이 없는데? 남의 편지를 삭제할 수 없으삼' })
     }
     if (!isValid) {
         return res.sendStatus(404);
