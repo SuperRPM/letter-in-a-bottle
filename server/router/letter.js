@@ -20,4 +20,7 @@ router.post('/:id', isAuth, letterController.postReply);
 // DELETE /letter/:id
 router.delete('/:id', isAuth, letterController.removeLetter);
 
+// PUT /letter/open/:id
+router.put('/open/:id', isAuth, letterController.openLetter);
+
 export default router;

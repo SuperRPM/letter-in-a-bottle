@@ -30,7 +30,6 @@ export async function getAllLetterByAccount(account) {
         ...ORDER_DESC,
         include: {
             model: User,
-            // model: Reply,
             attributes: [],
             where: {
                 account: account,
@@ -130,5 +129,13 @@ export async function resetLetter(letterId) {
     .then((user) => {
         user.mail = 0;
         return user.save();
+    })
+}
+
+export async function openLetterById(id) {
+    return Letter.update({
+        open: true,
+    },{
+        where: {id: id},
     })
 }

@@ -24,6 +24,9 @@ export async function signup(req, res) {
     res.status(200).json({ token, userId }); //userId return is not necessary
 }
 
+// 아이디가 틀렸는지 비밀번호가 틀렸는지 원래 아려주면 안됨. 해킹당함.
+// 근데 둘중 뭐가 틀렸는지 구분이 안되니까 내가 에러 해결이 잘 안됨.
+// 콘솔창에 에러 출력해주면 되지않을까?
 export async function login(req, res) {
     const { account, password } = req.body;
     const user = await userData.findByAccount(account);

@@ -64,6 +64,10 @@ export const Letter = sequelize.define('letter', {
     replied: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
+    },
+    open: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
     }
 }, { updatedAt: false });
 

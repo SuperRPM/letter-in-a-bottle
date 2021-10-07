@@ -77,3 +77,9 @@ export async function removeLetter(req, res) {
     await letterData.deleteLetter(id);
     res.sendStatus(204);
 }
+
+export async function openLetter(req, res) {
+    const id = req.params.id;
+    await letterData.openLetterById(id);
+    
+}
