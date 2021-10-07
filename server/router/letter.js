@@ -9,7 +9,7 @@ const router = express.Router();
 router.get('/', isAuth, letterController.getAllLetter);
 
 // GET /letter/:id
-router.get('/:id', isAuth, letterController.getLetter);
+router.get('/:id', isAuth, letterController.getReply);
 
 // POST /letter
 router.post('/', isAuth, letterController.postLetter);

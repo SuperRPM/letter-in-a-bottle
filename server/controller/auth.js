@@ -21,7 +21,7 @@ export async function signup(req, res) {
         url,
     });
     const token = createJwtToken(userId);
-    res.status(200).json({ token, userId });
+    res.status(200).json({ token, userId }); //userId return is not necessary
 }
 
 export async function login(req, res) {

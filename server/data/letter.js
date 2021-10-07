@@ -10,6 +10,7 @@ const JOIN_USER = {
         'createdAt',
         'userId',
         'receiver',
+        'replied',
         [Sequelize.col('user.name'), 'name'],
         [Sequelize.col('user.account'), 'account'],
         [Sequelize.col('user.url'), 'url'],
@@ -22,14 +23,22 @@ const JOIN_USER = {
 
 const ORDER_DESC = { order: [['createdAt', 'DESC']] };
 
+// 여기서 reply 까지 한꺼번에 가져오자
 export async function getAllLetterByAccount(account) {
     return Letter.findAll({
         ...JOIN_USER,
         ...ORDER_DESC,
         include: {
-            ...JOIN_USER.include,
-            where: {account: account},
+            model: User,
+            // model: Reply,
+            attributes: [],
+            where: {
+                account: account,
+            },
         },
+        where: {
+            [Op.not] : {replied: 0}
+        }
     });
 };
 

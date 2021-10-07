@@ -2,7 +2,7 @@ import { createWebHistory, createRouter } from "vue-router";
 import Write from './components/Write.vue';
 import Home from './components/Home.vue';
 import Mailbox from './components/Mailbox.vue'
-
+import Mymailbox from './components/Mymailbox.vue'
 
 const routes = [
     {
@@ -12,6 +12,10 @@ const routes = [
     {
         path: "/mailbox",
         component: Mailbox,
+    },
+    {
+        path: "/mymailbox",
+        component: Mymailbox,
     },
     {
         path: "/",

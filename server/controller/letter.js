@@ -11,6 +11,16 @@ export async function getAllLetter(req, res) {
     }
 }
 
+export async function getReply(req, res) {
+    const id = req.params.id;
+    const reply = await letterData.getReplyById(id);
+    if (reply) {
+        res.status(200).json(reply);
+    } else {
+        res.status(404).json({ message: 'there is no reply of this letter'});
+    }
+}
+
 export async function getLetter(req, res) {
     const id = req.params.id;
     const letter = await letterData.getLetterById(id);
