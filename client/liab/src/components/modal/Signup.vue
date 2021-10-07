@@ -1,7 +1,8 @@
 <template>
     <div class="black-bg" v-if="signupModal">
         <div class="white-bg">
-            <form @submit.prevent="onSubmit">
+            <!-- <form @submit.prevent="onSubmit"> -->
+            <div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Email</label>
                     <input type="email" class="form-control" id="input-email" v-model="email" aria-describedby="emailHelp" placeholder="example@email.com">
@@ -21,9 +22,10 @@
                 </div>
                 <div id="btn-group">
                     <button @click="signup" type="submit" class="btn btn-outline-dark">회원가입</button>
-                    <button @click="$emit(signupClose)" type="submit" class="btn btn-outline-dark">닫기</button>
+                    <button @click="$emit('signupClose')" type="submit" class="btn btn-outline-dark">닫기</button>
                 </div>                
-            </form>
+            <!-- </form> -->
+            </div>    
         </div>
     </div>
 </template>
@@ -62,6 +64,7 @@ export default {
                 console.log(res);
                 localStorage.setItem('token', res.data.token)
                 localStorage.setItem('account', this.account)
+                this.$router.go();
             })
             .catch((err) => {
                 console.log(err.response);
