@@ -64,7 +64,8 @@ export default {
                 localStorage.setItem('account', this.account)
             })
             .catch((err) => {
-                console.log(err);
+                console.log(err.response);
+                alert(err.response.data.message)
             })
         }
     }

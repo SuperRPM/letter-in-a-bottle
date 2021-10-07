@@ -1,6 +1,7 @@
 <template>
     <button class="btn btn-outline-dark" @click="getRepliedLetter">되돌아온 편지 확인하기</button>
-<div v-if="replyArray[repliedLetterArray.length - 1]"> // 랜더링할때 데이터 없으면 에러메시지 난다. 그래서 넣어준다. -끗-
+    <!-- // 랜더링할때 데이터 없으면 에러메시지 난다. 그래서 넣어준다. -끗- -->
+<div v-if="replyArray[repliedLetterArray.length - 1]"> 
     <div class="mt-5" v-for="(letter, index) in repliedLetterArray" :key="index">
         <div class="post">
             <div class="post-header">

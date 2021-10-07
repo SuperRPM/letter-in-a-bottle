@@ -54,7 +54,8 @@ export default {
                 this.$router.go();
             })
             .catch((error) => {
-                console.log(error);
+                console.log(error.response);
+                alert(error.response.data.message);
             })
         }
     }

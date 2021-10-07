@@ -1,17 +1,17 @@
 <template>
     <div class="post">
-    <div class="post-header">
-      <span class="profile-name"></span>
-    </div>
-    <div class="post-body">
-        {{letter.text}}
-        {{letter.message}}
-    </div>
-    <div class="post-content">
-      <p><strong>{{letter.name}}</strong></p>
-      <p class="date">{{letter.createdAt}}</p>
-    </div>
-</div> 
+        <div class="post-header">
+            <span class="profile-name"></span>
+        </div>
+        <div class="post-body">
+            {{letter.text}}
+            {{letter.message}}
+        </div>
+        <div class="post-content">
+            <p><strong>{{letter.name}}</strong></p>
+            <p class="date">{{letter.createdAt}}</p>
+        </div>
+    </div> 
 </template>
 
 <script>
