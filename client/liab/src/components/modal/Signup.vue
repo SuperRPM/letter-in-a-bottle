@@ -22,7 +22,7 @@
                 </div>
                 <div id="btn-group">
                     <button @click="signup" type="submit" class="btn btn-outline-dark">회원가입</button>
-                    <button @click="$emit('signupClose')" type="submit" class="btn btn-outline-dark">닫기</button>
+                    <button @click="$emit('signupClose')" class="btn btn-outline-dark">닫기</button>
                 </div>                
             <!-- </form> -->
             </div>    
@@ -32,8 +32,11 @@
 
 <script>
 import axios from 'axios';
+import dotenv from 'dotenv';
+dotenv.config();
 
 export default {
+    name: 'Signup',
     data() {
         return {
             email: "",
@@ -48,7 +51,7 @@ export default {
         signupModal: Boolean,
     },
     methods: {
-        signup() {
+        async signup() {
             axios({
                 method: 'post',
                 url: `/api/auth/signup`,
@@ -64,14 +67,14 @@ export default {
                 console.log(res);
                 localStorage.setItem('token', res.data.token)
                 localStorage.setItem('account', this.account)
-                this.$router.go();
+                // this.$router.go();
             })
             .catch((err) => {
-                console.log(err.response);
+                console.log(err);
                 alert(err.response.data.message)
             })
-        }
-    }
+        },
+    },
 }
 </script>
 

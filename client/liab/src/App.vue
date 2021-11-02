@@ -1,8 +1,9 @@
 <template>
 <div class="main">
-  <Navbar :modalStatus="modalStatus" :signupModal="signupModal" @loginOpen="modalStatus = true" @signupOpen="signupModal = true" @signupClose="signupModal = false" :tokenExist="tokenExist"/>
+  <Navbar :modalStatus="modalStatus" :signupModal="signupModal" @loginOpen="modalStatus = true" @signupOpen="authEmailModal = true" @signupClose="authEmailModal = false" :tokenExist="tokenExist"/>
   <Login :modalStatus="modalStatus" @modalClose="modalStatus = false"/>
-  <Signup v-bind:signupModal="signupModal" @signupClose="signupModal = false"/>
+  <AuthEmail v-bind:authEmailModal="authEmailModal" @authEmailClose="authEmailModal = false"/>
+  <!-- <Signup v-bind:signupModal="signupModal" @signupClose="signupModal = false"/> -->
   <div class="mt-10" id="router-view">
     <router-view></router-view>
   </div>
@@ -12,22 +13,25 @@
 <script>
 import Navbar from './components/Navbar.vue';
 import Login from './components/modal/Login.vue';
-import Signup from './components/modal/Signup.vue';
+// import Signup from './components/modal/Signup.vue';
+import AuthEmail from './components/modal/AuthEmail.vue';
 
 export default {
   name: 'App',
   data() {
     return {
       modalStatus: false,
-      signupModal: false,
+      signupModal: true,
+      authEmailModal: false,
       tokenExist: true,
       bgImage: './assets/letter-in-a-bottle.jpg',
     }
   },
   components: {
-    Signup: Signup,
+    // Signup: Signup,
     Navbar: Navbar,
     Login: Login,
+    AuthEmail: AuthEmail,
   },
   beforeMount() {
     if (localStorage.getItem('token')) {

@@ -2,6 +2,19 @@ import * as userData from '../data/auth.js';
 import jwt from 'jsonwebtoken';
 import config from '../config.js'
 import bcrypt from 'bcrypt';
+import dotenv from 'dotenv';
+dotenv.config();
+import nodemailer from 'nodemailer';
+import { confirmEmail } from '../router/auth.js'
+
+function required(key, defaultValue = undefined) {
+    const value = process.env[key] || defaultValue;
+    if (value == null) {
+        throw new Error(`Key ${key} is undefined`);
+    }
+    return value
+}
+
 function createJwtToken(id) {
     return jwt.sign({ id }, config.jwt.secretKey, { expiresIn: config.jwt.expiresInSec });
 }
@@ -25,8 +38,8 @@ export async function signup(req, res) {
 }
 
 // 아이디가 틀렸는지 비밀번호가 틀렸는지 원래 아려주면 안됨. 해킹당함.
-// 근데 둘중 뭐가 틀렸는지 구분이 안되니까 내가 에러 해결이 잘 안됨.
-// 콘솔창에 에러 출력해주면 되지않을까?
+// 근데 둘중 뭐가 틀렸는지 구분이 안되니까 내가 어디에러인지 찾기 어려움
+// 콘솔에 출력해주면 될듯?
 export async function login(req, res) {
     const { account, password } = req.body;
     const user = await userData.findByAccount(account);
@@ -39,6 +52,32 @@ export async function login(req, res) {
     }
     const token = createJwtToken(user.id);
     res.status(200).json({ token, account });
+}
+
+export async function authEmail(req, res) {
+    const {email} = req.body;
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: required('EMAIL'),
+            pass: required('PASSWORD'),
+        }
+    })
+    const option = {
+        from: 'vidafirmar@gmail.com',
+        to: email,
+        subject: 'Letter In Bottle 이메일 인증',
+        html: '<h3>클릭해서 회원가입을 계속하세요.</h3><a href="http://localhost:8080/signup">' + '회원가입</a>',
+    };
+    transporter.sendMail(option, function(err, res){
+        if (err) {
+            console.log('error: ' + err);
+        } else {
+            console.log('sendMail success!')
+        }
+        transporter.close();
+    })
+    res.status(200).json({ message: `email sending success`})
 }
 
 export async function me(req, res) {

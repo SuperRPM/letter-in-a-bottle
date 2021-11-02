@@ -3,6 +3,7 @@ import Write from './components/Write.vue';
 import Home from './components/Home.vue';
 import Mailbox from './components/Mailbox.vue'
 import Mymailbox from './components/Mymailbox.vue'
+import Signup from './components/modal/Signup.vue'
 
 const routes = [
     {
@@ -16,6 +17,10 @@ const routes = [
     {
         path: "/mymailbox",
         component: Mymailbox,
+    },
+    {
+        path: "/signup",
+        component: Signup
     },
     {
         path: "/",
