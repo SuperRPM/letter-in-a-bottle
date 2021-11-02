@@ -1,5 +1,5 @@
 <template>
-    <div class="black-bg" v-if="signupModal">
+    <div class="black-bg">
         <div class="white-bg">
             <!-- <form @submit.prevent="onSubmit"> -->
             <div>
@@ -10,19 +10,19 @@
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Account</label>
-                    <input type="text" class="form-control" id="input-account" v-model="account" placeholder="id를 입력하삼">
+                    <input type="text" class="form-control" id="input-account" v-model="account" placeholder="사용할 아이디를 입력하세요.">
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Password</label>
-                    <input type="password" class="form-control" id="input-password" v-model="password" placeholder="비밀번호를 입력하삼">
+                    <input type="password" class="form-control" id="input-password" v-model="password" placeholder="비밀번호를 입력하세요">
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Name</label>
-                    <input type="text" class="form-control" id="input-name" v-model="name" placeholder="이름이 뭐셈?">
+                    <input type="text" class="form-control" id="input-name" v-model="name" placeholder="다른사람에게 보일 이름을 알려주세요.">
                 </div>
                 <div id="btn-group">
                     <button @click="signup" type="submit" class="btn btn-outline-dark">회원가입</button>
-                    <button @click="$emit('signupClose')" class="btn btn-outline-dark">닫기</button>
+                    <!-- <button @click="$emit('signupClose')" class="btn btn-outline-dark">닫기</button> -->
                 </div>                
             <!-- </form> -->
             </div>    
@@ -32,8 +32,6 @@
 
 <script>
 import axios from 'axios';
-import dotenv from 'dotenv';
-dotenv.config();
 
 export default {
     name: 'Signup',

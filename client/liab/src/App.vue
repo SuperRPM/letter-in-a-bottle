@@ -3,7 +3,7 @@
   <Navbar :modalStatus="modalStatus" :signupModal="signupModal" @loginOpen="modalStatus = true" @signupOpen="authEmailModal = true" @signupClose="authEmailModal = false" :tokenExist="tokenExist"/>
   <Login :modalStatus="modalStatus" @modalClose="modalStatus = false"/>
   <AuthEmail v-bind:authEmailModal="authEmailModal" @authEmailClose="authEmailModal = false"/>
-  <!-- <Signup v-bind:signupModal="signupModal" @signupClose="signupModal = false"/> -->
+  <Signup v-bind:signupModal="signupModal" @signupClose="signupModal = false"/>
   <div class="mt-10" id="router-view">
     <router-view></router-view>
   </div>

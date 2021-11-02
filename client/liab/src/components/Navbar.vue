@@ -22,6 +22,7 @@
       <button v-if="tokenExist" @click="$emit('loginOpen')" type="button" class="btn btn-outline-dark">로그인</button>
       <button v-if="tokenExist" @click="$emit('signupOpen')" type="button" class="btn btn-outline-dark">회원가입</button>
       <button v-if="accountExist != undefined" @click="logout" type="button" class="btn btn-outline-dark">로그아웃</button>
+      <button v-if="accountExist != undefined" @click="logout" type="button" class="btn btn-outline-danger">회원탈퇴</button>
     </div>
   </div>
 </nav>
