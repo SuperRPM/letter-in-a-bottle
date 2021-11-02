@@ -11,3 +11,8 @@ export async function createUser(userObject) {
 export async function findById(id) {
     return User.findOne({ where: {id} })
 }
+
+export async function eliminateUser(account) {
+    return User.destroy({ where: {account: account}}).then((result) => {console.log(result);}).catch((err) => {console.log(err);})
+    
+}

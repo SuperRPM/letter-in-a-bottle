@@ -11,7 +11,7 @@
                 <div id="btn-group">
                     <button @click="sendEmail" type="submit" class="btn btn-outline-dark">이메일 인증</button>
                     <button @click="$emit('authEmailClose')" class="btn btn-outline-dark">닫기</button>
-                </div>                
+                </div>
             <!-- </form> -->
             </div>    
         </div>
@@ -42,7 +42,7 @@ export default {
             })
             .then((res) => {
                 console.log(res);
-                console.log("email intercepter success");
+                console.log("email sending success");
             })
             .catch((err) => {
                 console.log('axios send mail err: ' + err);

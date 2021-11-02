@@ -1,7 +1,7 @@
 import express from 'express';
 import { sequelize } from './db/database.js';
 // import 'express-async-errors';
-import { authRouter } from './router/auth.js';
+import authRouter from './router/auth.js';
 import letterRouter from './router/letter.js';
 import mailBoxRouter from './router/mailbox.js'
 const app = express();

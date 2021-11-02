@@ -5,7 +5,6 @@ import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
 dotenv.config();
 import nodemailer from 'nodemailer';
-import { confirmEmail } from '../router/auth.js'
 
 function required(key, defaultValue = undefined) {
     const value = process.env[key] || defaultValue;
@@ -80,6 +79,10 @@ export async function authEmail(req, res) {
     res.status(200).json({ message: `email sending success`})
 }
 
-export async function me(req, res) {
-    res.sendStatus(200);
+export async function leave(req, res) {
+    const { account } = req.body
+    console.log('account: ' + account);
+    const result = await userData.eliminateUser(account);
+    console.log(result);
+    res.status(200).json({ message: `good bye`})
 }
