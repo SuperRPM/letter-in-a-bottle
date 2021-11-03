@@ -65,12 +65,13 @@ export default {
                 console.log(res);
                 localStorage.setItem('token', res.data.token)
                 localStorage.setItem('account', this.account)
-                // this.$router.go();
+                this.$router.push({path: '/'});
             })
             .catch((err) => {
                 console.log(err);
                 alert(err.response.data.message)
             })
+            // this.$router.go();
         },
     },
 }
