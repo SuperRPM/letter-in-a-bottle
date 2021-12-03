@@ -19,6 +19,8 @@
 - nodejs
 - express
 - vue
+- mySQL
+- sequelize
 
 ## 개발중 발생한 이슈
 ### mvc 패턴
@@ -57,4 +59,86 @@ local storage에 저장했다.
 그래서 (특히 회원가입시)자동으로 로그인이 되길 바랬다.
 local storage에 저장하면 이 정보만 가지고도 로그인상태를 유지시켜줄 수 있으니까 간단하게 기능을 구현할 수 있을거 같아서 선택했다.
 
-## 트러블 슈팅
+## 회원 관리
+
+- 기능: 회원가입
+- 동작: axios로 요청을 받아서 비밀번호를 bcrypt.hash()를 이용해서 해싱한뒤 저장후 token을 response에 포함시켜 회원가입과 동시에 로그인
+```javascript
+export async function signup(req, res) {
+    const { account, password, name, email, url } = req.body;
+    const exist = await userData.findByAccount(account);
+    if (exist) {
+        return res.status(409).json({ message: `${account}는 이미 사용되고 있는 아이디 입니다.`});
+    };
+    const hash = await bcrypt.hash(password, config.bcrypt.saltRounds);
+    const userId = await userData.createUser({
+        account,
+        password : hash,
+        name,
+        email,
+        url,
+    });
+    const token = createJwtToken(userId);
+    res.status(200).json({ token, userId }); //userId return is not necessary
+}
+
+```
+
+## 편지 가져오기
+
+- 기능: 다른 사람이 쓴 편지를 가져온다.
+- 동작: 자신이 쓴편지와 이미 답장이 된 편지를 제외한 편지들 중에서 랜덤하게 가져온다. 이 때 내가 답장하지 않은 편지를 하나 가지고 있다면 편지를 새로 가져올 수 없게 한다.
+```javascript
+export async function getRandomLetter(req, res) {
+    const alreadyGetMailId = await letterData.checkMailbox(req.userId);
+    if (alreadyGetMailId) { 
+        const existMail = await letterData.getLetterById(alreadyGetMailId)
+        return res.status(200).json(existMail)
+    }
+    const UnrepliedLetter = await letterData.getUnrepliedLetter(req.userId);
+    if (!UnrepliedLetter) {
+        return res.status(404).json({ message: '아직 편지가 없어요! 다음에 다시 시도해 주세염' });
+    }
+    res.status(200).json(UnrepliedLetter)
+```
+
+### 답장하기 
+
+- 기능: 답장을 작성해서 db에 저장해주고 편지의 답장여부를 설정하고 유저의 받은편지함을 초기화시켜준다 
+
+
+#### controller
+``` javascript
+export async function postReply(req, res) {
+    const { text } = req.body;
+    const letterId = req.params.id;
+    await letterData.createReply(text, req.userId, letterId);
+    res.status(201).json({ message: 'reply success'});
+}
+
+```
+
+#### data
+
+```javascript
+export async function createReply(text, userId, letterId) {
+    let replyId = 0
+    await Reply
+    .create({ text, userId, letterId })
+    .then((data) => {
+        replyId = data.dataValues.id;
+    })
+    await User
+    .findByPk(userId)
+    .then((user) => {
+        user.mail = 0
+        user.save()
+    })
+    return await Letter.findByPk(letterId)
+    .then((letter) => { 
+        letter.replied = replyId;
+        letter.save();
+        return
+    })
+}
+```
