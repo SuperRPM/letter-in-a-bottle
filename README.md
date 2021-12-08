@@ -23,7 +23,7 @@
 - sequelize
 - bootstrap
 
-## 개발중 발생한 이슈
+## 개발중 고민한 것들
 ### mvc 패턴
 사실 몇몇 기능은 server/app.js에서 직접처리하거나
 server/router.js에서 바로 처리하는게 훨씬 코드가 간결하고 만들기도 편하다.
@@ -57,10 +57,15 @@ local storage에 저장했다.
 그래서 (특히 회원가입시)자동으로 로그인이 되길 바랬다.
 local storage에 저장하면 이 정보만 가지고도 로그인상태를 유지시켜줄 수 있으니까 간단하게 기능을 구현할 수 있을거 같아서 선택했다.
 
+# 구현한 기능
 ## 회원 관리
 
 - 기능: 회원가입
 - 동작: axios로 요청을 받아서 비밀번호를 bcrypt.hash()를 이용해서 해싱한뒤 저장후 token을 response에 포함시켜 회원가입과 동시에 로그인
+
+<details>
+<summary>회원가입 소스코드 접기/펼치기</summary>
+ 
 ```javascript
 export async function signup(req, res) {
     const { account, password, name, email, url } = req.body;
@@ -81,15 +86,19 @@ export async function signup(req, res) {
 }
 
 ```
+</details>
 
 ## 편지 가져오기
 
 - 기능: 다른 사람이 쓴 편지를 가져온다.
 - 동작: 자신이 쓴편지와 이미 답장이 된 편지를 제외한 편지들 중에서 랜덤하게 가져온다. 이 때 내가 답장하지 않은 편지를 하나 가지고 있다면 편지를 새로 가져올 수 없게 한다.
-<details>
-<summary>회원가입 소스코드</summary>
-<div markdown="1">
 
+
+<details>
+<summary>랜덤편지 가져오기 소스코드 접기/펼치기</summary>
+ 
+letterData.checkMailbox로 이미 편지를 가지 있는 경우 답장하거 돌려보내지 않고 새 편지르 받을 수 없게한다.
+답장 비율을 늘리려느 목적과 하나으 편직 동시에 두번으 답장을 받는 경우를 방지한다
 ```javascript
 export async function getRandomLetter(req, res) {
     const alreadyGetMailId = await letterData.checkMailbox(req.userId);
@@ -103,15 +112,35 @@ export async function getRandomLetter(req, res) {
     }
     res.status(200).json(UnrepliedLetter)
 ```
+</details>
 
-</div>
+<details>
+ <summary>letter written by user are excluded</summary>
+ 
+본인이 쓴 편지를 본인이 돌려받는걸 방지하기 위해 db에서 sequelize로 [Op.not] : {userId: userId} 조건을 준다.
+```javascript
+export async function getUnrepliedLetter(userId) {
+    const unrepliedLetter = await Letter.findAll({
+        ...JOIN_USER,
+        where: { 
+            receiver: 0,
+            replied: 0, 
+            [Op.not] : {userId: userId} // can not get letter more than one.
+        },
+        include: {
+            ...JOIN_USER.include,
+        },
+    });
+```
 </details>
 
 ### 답장하기 
 
 - 기능: 답장을 작성해서 db에 저장해주고 편지의 답장여부를 설정하고 유저의 받은편지함을 초기화시켜준다 
 
-
+<details>
+<summary>답장하기 controller 부분 접기/펼치기</summary>
+ 
 #### controller
 ``` javascript
 export async function postReply(req, res) {
@@ -122,7 +151,11 @@ export async function postReply(req, res) {
 }
 
 ```
+</details>
 
+<details>
+<summary>답장하기 data 부분 접기/펼치기</summary>
+ 
 #### data
 
 ```javascript
@@ -147,3 +180,6 @@ export async function createReply(text, userId, letterId) {
     })
 }
 ```
+</details>
+
+# Trouble shooting
