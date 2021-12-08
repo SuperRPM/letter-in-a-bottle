@@ -21,17 +21,15 @@
 - vue
 - mySQL
 - sequelize
+- bootstrap
 
 ## 개발중 발생한 이슈
 ### mvc 패턴
-이론은 익히 들었다.
-그래서 내가 ***왜*** 썼나?
 사실 몇몇 기능은 server/app.js에서 직접처리하거나
 server/router.js에서 바로 처리하는게 훨씬 코드가 간결하고 만들기도 편하다.
 그런데 그렇게 한두번의 예외를 두니까 기능들이 쌓이고 api가 많아질 수록
 에러가 생기면 router에 직접만들어 놓고는 controller에서 왜 없는지 코드를 한참 찾게 된다.
 안쓰면 안쓴만큼 고생한다.
-
 
 에러났을 때 어디에서 에러가 났는지 명확하지 않을 때가 있다.
 그 때 에러가 발생한 대략적인 기능을 유추하고 프로그램의 실행 프로세스를 유추해서 해당 기능이 있는 디렉토리로 에러 발생 예상범위를 좁힐 수 있다.
@@ -88,6 +86,10 @@ export async function signup(req, res) {
 
 - 기능: 다른 사람이 쓴 편지를 가져온다.
 - 동작: 자신이 쓴편지와 이미 답장이 된 편지를 제외한 편지들 중에서 랜덤하게 가져온다. 이 때 내가 답장하지 않은 편지를 하나 가지고 있다면 편지를 새로 가져올 수 없게 한다.
+<details>
+<summary>회원가입 소스코드</summary>
+<div markdown="1">
+
 ```javascript
 export async function getRandomLetter(req, res) {
     const alreadyGetMailId = await letterData.checkMailbox(req.userId);
@@ -101,6 +103,9 @@ export async function getRandomLetter(req, res) {
     }
     res.status(200).json(UnrepliedLetter)
 ```
+
+</div>
+</details>
 
 ### 답장하기 
 
